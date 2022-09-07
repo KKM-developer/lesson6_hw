@@ -52,7 +52,32 @@ double[] crosspoint = GetCrossPoint();
 задача 40 - HARD необязательная. На вход программы подаются три целых положительных числа. Определить , является ли это сторонами треугольника. 
 Если да, то вывести всю информацию по нему - площадь, периметр, значения углов треугольника в градусах, является ли он прямоугольным, равнобедренным, равносторонним.
 */
+string ChekTriangle()
+{
+    Console.Write("Введите длину первой строны треугольника: ");
+    double first = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Введите длину второй строны треугольника: ");
+    double second = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Введите длину третей строны треугольника: ");
+    double third = Convert.ToInt32(Console.ReadLine());
+    if (first < second+third && second < first+third && third < first+second)
+    {
+        Console.WriteLine($"Треугольник со сторонами {first} {second} {third} существует");
+        double perimeter = first + second + third; 
+        double halfPerim = perimeter/2;
+        double square = Math.Round(Math.Sqrt(halfPerim*(halfPerim-first)*(halfPerim-second)*(halfPerim-third)),2);
+        double btwFS = Math.Acos((Math.Pow(first,2)+Math.Pow(second,2)-Math.Pow(third,2))/(2*first*second));
+        double btwFT = Math.Acos((Math.Pow(first,2)+Math.Pow(third,2)-Math.Pow(second,2))/(2*first*third));
+        double btwST = Math.Acos((Math.Pow(second,2)+Math.Pow(third,2)-Math.Pow(first,2))/(2*second*third));
+        if (btwFS == 90 || btwFT == 90 || btwST== 90) Console.WriteLine("Треугольник прямоугольный");
+        if (btwFS == btwFT || btwFS == btwST || btwFT == btwST) Console.WriteLine("Треугольник равнобедренный");
+        if (first==second && first==third && third == second) Console.WriteLine("Треугольник равносторонний");
+        return $"перемитр = {perimeter}\nплощадь = {square}\nуглы = {btwFS}, {btwFT}, {btwST}";
+    }
+    else return $"Треугольник со сторонами {first} {second} {third} НЕ существует";
+}
 
+Console.WriteLine(ChekTriangle());
 /*
 задача 2 HARD необязательная. Сгенерировать массив случайных целых чисел размерностью m*n (размерность вводим с клавиатуры).
  Вывести на экран красивенько таблицей. Перемешать случайным образом элементы массива, причем чтобы каждый гарантированно переместился 
